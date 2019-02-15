@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flat_app/screens/App/index.dart';
 import 'package:flutter_flat_app/screens/Login/LoginScreenState.dart';
 import 'package:flutter_flat_app/theme/style.dart';
-import 'package:flutter_flat_app/screens/Profile/index.dart';
 
 class Routes {
 

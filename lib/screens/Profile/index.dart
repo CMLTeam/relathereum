@@ -1,16 +1,16 @@
 import "package:flutter/material.dart";
 
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+class ExampleScreen extends StatefulWidget {
+  const ExampleScreen({Key key}) : super(key: key);
 
   @override
-  ProfileState createState() => new ProfileState();
+  ExampleState createState() => new ExampleState();
 }
 
-class ProfileState extends State<ProfileScreen> {
+class ExampleState extends State<ExampleScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Text('Profile', style: TextStyle(fontSize: 20));
+    return  Text('Example Screen. Feel free to adjust.', style: TextStyle(fontSize: 20));
   }
 }

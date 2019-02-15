@@ -33,13 +33,13 @@ class AppState extends State<App> {
     Widget widget;
     switch (navigationIndex) {
       case 0:
-        widget = new ProfileScreen();
+        widget = new ExampleScreen();
         break;
       case 1:
-        widget = new ProfileScreen();
+        widget = new ExampleScreen();
         break;
       case 2:
-        widget = new ProfileScreen();
+        widget = new ExampleScreen();
         break;
     }
     return widget;
