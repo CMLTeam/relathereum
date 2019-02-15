@@ -7,10 +7,7 @@ class Routes {
 
   //App - single enter point after user is logged in.
   var routes = <String, WidgetBuilder>{
-    //"/Reports": (BuildContext context) => new ReportsScreen(),
     "/Login": (BuildContext context) => new LoginScreen(),
-    //"/Dashboard" : (BuildContext context) => new DashboardScreen(),
-    //"/Profile" : (BuildContext context) => new ProfileScreen(),
     "/App" : (BuildContext context) => new App(),
   };
 
