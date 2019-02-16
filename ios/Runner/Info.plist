@@ -20,6 +20,8 @@
       </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>io.flutter.embedded_views_preview</key>
+    <string>YES</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
