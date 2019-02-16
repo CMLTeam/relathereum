@@ -64,11 +64,32 @@ class CapsuleEscrowService {
             [BigInt.from(capsuleId), description]).send(client);
   }
 
+  fix(int capsuleId) async {
+    print("Fix $capsuleId");
+    await new Transaction(keys: credentials, maximumGas: MAX_GAS)
+        .prepareForCall(
+        contract, func("fix"), [BigInt.from(capsuleId)]).send(client);
+  }
+
+  reason(int capsuleId) async {
+    var res = await new Transaction(keys: credentials, maximumGas: MAX_GAS)
+        .prepareForCall(
+        contract, func("reason"), [BigInt.from(capsuleId)]).call(client);
+    print("Got reason: $res");
+  }
+
   static test() async {
     var c = await new CapsuleEscrowService().init();
     await c.checkIn(111);
     await c.checkOut(111);
-    await c.checkIn(222);
+    try {
+      await c.checkIn(222);
+    } catch (e) {
+      print("Was not able to checkin");
+      await c.reason(222);
+      await c.fix(222);
+      await c.checkIn(222);
+    }
     await c.checkOut(222);
     await c.reportAnIssue(222, "Something is wrong!");
     await c.checkIn(111);

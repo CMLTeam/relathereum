@@ -157,6 +157,20 @@
         "type": "uint32"
       }
     ],
+    "name": "fix",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
     "name": "checkOut",
     "outputs": [],
     "payable": false,
