@@ -21,6 +21,7 @@ contract Test {
     }
 
     function pay() public payable returns (uint) {
+//        require(false);
         money = msg.value;
         return money;
     }
