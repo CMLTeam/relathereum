@@ -77,11 +77,11 @@ class LoginScreenState extends State<LoginScreen> {
         body: new SingleChildScrollView(
             controller: scrollController,
             child: new Container(
-              padding: new EdgeInsets.all(16.0),
+              padding: new EdgeInsets.all(10.0),
               decoration: new BoxDecoration(color: Colors.white),
               child: new Column(
                 children: <Widget>[
-                  buildTitle(),
+                  buildTitle(marginTop: 60.0),
                   new Container(
                     height: screenSize.height / 6,
                     child: new Column(
