@@ -1,0 +1,22 @@
+{
+  "name": "relathereum",
+  "version": "0.0.1",
+  "description": "relathereum",
+  "main": "./test.sh",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "dependencies": {
+    "babel-register": "^6.26.0",
+    "random-number-csprng": "^1.0.2",
+    "solidity-coverage": "^0.5.11",
+    "truffle-hdwallet-provider": "^0.0.6",
+    "web3-eth-abi": "^1.0.0-beta.34",
+    "web3-provider-engine": "^14.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "./test.sh"
+  }
+}
