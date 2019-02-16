@@ -5,6 +5,39 @@
       {
         "name": "capsuleId",
         "type": "uint32"
+      }
+    ],
+    "name": "remove",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "exists",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
       },
       {
         "name": "description",
@@ -12,6 +45,63 @@
       }
     ],
     "name": "reportAnIssue",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "name": "checkIns",
+    "outputs": [
+      {
+        "name": "customer",
+        "type": "address"
+      },
+      {
+        "name": "checkedIn",
+        "type": "uint32"
+      },
+      {
+        "name": "checkedOut",
+        "type": "uint32"
+      },
+      {
+        "name": "reported",
+        "type": "uint32"
+      },
+      {
+        "name": "reportReason",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      },
+      {
+        "name": "fee",
+        "type": "uint128"
+      },
+      {
+        "name": "deposit",
+        "type": "uint128"
+      }
+    ],
+    "name": "add",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -29,6 +119,25 @@
     "outputs": [],
     "payable": true,
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "free",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -55,39 +164,125 @@
     "type": "function"
   },
   {
-    "constant": false,
+    "constant": true,
     "inputs": [
       {
-        "name": "capsuleId",
+        "name": "",
         "type": "uint32"
       }
     ],
-    "name": "removeCapsule",
-    "outputs": [],
+    "name": "capsules",
+    "outputs": [
+      {
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "name": "fee",
+        "type": "uint128"
+      },
+      {
+        "name": "deposit",
+        "type": "uint128"
+      }
+    ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": false,
+    "constant": true,
     "inputs": [
       {
         "name": "capsuleId",
         "type": "uint32"
-      },
-      {
-        "name": "feeWei",
-        "type": "uint96"
-      },
-      {
-        "name": "depositWei",
-        "type": "uint96"
       }
     ],
-    "name": "addCapsule",
-    "outputs": [],
+    "name": "reason",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "fresh",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "bad",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "occupied",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "ownerBalances",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   }
 ]

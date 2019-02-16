@@ -18,5 +18,5 @@ module.exports = async function(deployer, network, accounts) {
 
 	// deployment successful, print capsule address
 	console.log("________________________________________________________________________");
-	console.log("capsule: " + capsule.address);
+	console.log("capsule_escrow_address " + capsule.address);
 };

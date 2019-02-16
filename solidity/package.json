@@ -19,6 +19,7 @@
   "scripts": {
     "test": "./test.sh",
     "compile": "truffle compile",
-    "migrate": "truffle migrate --all --reset"
+    "migrate": "truffle migrate --all --reset",
+    "deploy": "./deploy.sh"
   }
 }
