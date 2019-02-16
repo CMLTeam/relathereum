@@ -5,13 +5,13 @@ pragma solidity ^0.4.23;
  * [0] doesn't exist: capsules[id].owner == 0
  *      !exists(id)
  * [1] exists but was never used: checkIns[id].customer == 0
- *      fresh(id)
+ *      isFresh(id)
  * [2] occupied: checkIns[id].checkIn != 0
- *      occupied(id)
+ *      isOccupied(id)
  * [3] free (free for next check in): checkIns[id].checkedOut != 0
- *      free(id)
+ *      isFree(id)
  * [4] reported as bad: checkIns[id].reported != 0
- *     bad(id)
+ *     isBad(id)
  */
 
 contract CapsuleEscrow {
@@ -46,7 +46,7 @@ contract CapsuleEscrow {
     }
 
     // state [1]
-    function fresh(uint32 capsuleId) public constant returns(bool) {
+    function isFresh(uint32 capsuleId) public constant returns(bool) {
         return checkIns[capsuleId].customer == address(0);
     }
 
@@ -61,7 +61,7 @@ contract CapsuleEscrow {
     }
 
     // state [4]
-    function bad(uint32 capsuleId) public constant returns(bool) {
+    function isBad(uint32 capsuleId) public constant returns(bool) {
         return checkIns[capsuleId].reported != 0;
     }
 
@@ -76,11 +76,11 @@ contract CapsuleEscrow {
         require(
             !exists(capsuleId)
             || capsules[capsuleId].owner == msg.sender
-            && (fresh(capsuleId) || isFree(capsuleId))
+            && (isFresh(capsuleId) || isFree(capsuleId))
         );
 
         // send money back to previous customer
-        if(isFree(capsuleId) && !bad(capsuleId)) {
+        if(isFree(capsuleId) && !isBad(capsuleId)) {
             checkIns[capsuleId].customer.transfer(capsules[capsuleId].deposit);
         }
 
@@ -95,10 +95,10 @@ contract CapsuleEscrow {
     function remove(uint32 capsuleId) public {
         // ensure capsule is removed by its owner
         // and no one currently lives in that capsule
-        require(capsules[capsuleId].owner == msg.sender && (fresh(capsuleId) || isFree(capsuleId)));
+        require(capsules[capsuleId].owner == msg.sender && (isFresh(capsuleId) || isFree(capsuleId)));
 
         // send money back to previous customer
-        if(isFree(capsuleId) && !bad(capsuleId)) {
+        if(isFree(capsuleId) && !isBad(capsuleId)) {
             checkIns[capsuleId].customer.transfer(capsules[capsuleId].deposit);
         }
 
@@ -109,7 +109,7 @@ contract CapsuleEscrow {
 
     function checkIn(uint32 capsuleId) public payable {
         // verify capsule exists and is not occupied
-        require(exists(capsuleId) && (fresh(capsuleId) || isFree(capsuleId) && !bad(capsuleId)));
+        require(exists(capsuleId) && (isFresh(capsuleId) || isFree(capsuleId) && !isBad(capsuleId)));
 
         // how much ETH we need to lock
         uint256 price = capsules[capsuleId].fee + capsules[capsuleId].deposit;
@@ -125,7 +125,7 @@ contract CapsuleEscrow {
             msg.sender.transfer(msg.value - price);
         }
 
-        if(!fresh(capsuleId)) {
+        if(!isFresh(capsuleId)) {
             // return ETH to previously checked out customer
             checkIns[capsuleId].customer.transfer(capsules[capsuleId].deposit);
         }
@@ -143,7 +143,7 @@ contract CapsuleEscrow {
 
     function checkOut(uint32 capsuleId) public {
         // verify sender is checked in
-        require(checkIns[capsuleId].customer == msg.sender && !isFree(capsuleId) && !bad(capsuleId));
+        require(checkIns[capsuleId].customer == msg.sender && !isFree(capsuleId) && !isBad(capsuleId));
 
         // perform the checkout
         checkIns[capsuleId].checkedOut = uint32(now);
@@ -151,7 +151,7 @@ contract CapsuleEscrow {
 
     function reportAnIssue(uint32 capsuleId, string description) public {
         // verify capsule exists and is not occupied
-        require(exists(capsuleId) && !fresh(capsuleId) && isFree(capsuleId) && !bad(capsuleId));
+        require(exists(capsuleId) && !isFresh(capsuleId) && isFree(capsuleId) && !isBad(capsuleId));
 
         // top up owner's balance
         ownerBalances[capsules[capsuleId].owner] += capsules[capsuleId].deposit;
