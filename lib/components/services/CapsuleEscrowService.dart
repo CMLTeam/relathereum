@@ -40,6 +40,7 @@ class CapsuleEscrowService {
   }
 
   checkIn(int capsuleId) async {
+    print("Check in $capsuleId");
     await new Transaction(keys: credentials, maximumGas: MAX_GAS)
         .prepareForPaymentCall(
             contract,
@@ -50,12 +51,14 @@ class CapsuleEscrowService {
   }
 
   checkOut(int capsuleId) async {
+    print("Check out $capsuleId");
     await new Transaction(keys: credentials, maximumGas: MAX_GAS)
         .prepareForCall(
             contract, func("checkOut"), [BigInt.from(capsuleId)]).send(client);
   }
 
   reportAnIssue(int capsuleId, String description) async {
+    print("Report issue $capsuleId");
     await new Transaction(keys: credentials, maximumGas: MAX_GAS)
         .prepareForCall(contract, func("reportAnIssue"),
             [BigInt.from(capsuleId), description]).send(client);
@@ -65,6 +68,10 @@ class CapsuleEscrowService {
     var c = await new CapsuleEscrowService().init();
     await c.checkIn(111);
     await c.checkOut(111);
+    await c.checkIn(222);
+    await c.checkOut(222);
     await c.reportAnIssue(222, "Something is wrong!");
+    await c.checkIn(111);
+    await c.checkOut(111);
   }
 }
