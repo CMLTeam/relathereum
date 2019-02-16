@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import "../../utils/common.dart";
+import "../QrCodeScanner/QrCodeScannerScreen.dart";
+import "../../components/Buttons/ScanQrButton.dart";
 
 ExactAssetImage qrCodeLogo = new ExactAssetImage("assets/qr-code.png");
 
@@ -12,51 +14,8 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
 
-  _doSthWithQACodeAndRenameThisFunc(){
-    print("SCAN TO RELAX!");
-    //do sth
-  }
-  Widget _buildButton() {
-    return Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(7), border: Border.all(color: Colors.blueAccent, width: 2)),
-        padding: EdgeInsets.symmetric(vertical: 3),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
-        child: Material(
-            color: Colors.white,
-            child: InkWell(
-              child: Container(
-                alignment: Alignment.center,
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                        padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
-                        child: new Image(
-                          image: qrCodeLogo,
-                          width: 50,
-                          height: 50,
-                        )),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      child: Text(
-                        "SCAN TO RELAX",
-                        style: TextStyle(
-
-                            color: Colors.blueAccent,
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold ),
-                      ),
-                    )
-                  ],
-                ),
-                height: 50,
-                width: 350,
-              ),
-              onTap: () {
-                _doSthWithQACodeAndRenameThisFunc();
-              },
-              splashColor: Colors.black38,
-              highlightColor: Colors.black38,
-            )));
+  launchQrCodeScanner(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>QrCodeScannerScreen()));
   }
 
   @override
@@ -74,6 +33,6 @@ class AppState extends State<App> {
             color: Colors.white,
             child: Column(children: [buildTitle(), screen])),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: _buildButton());
+        floatingActionButton: ScanQrButton(scanQr: launchQrCodeScanner,));
   }
 }
