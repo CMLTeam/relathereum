@@ -161,7 +161,6 @@ contract CapsuleEscrow {
         checkIns[capsuleId].reportReason = description;
     }
 
-
     function withdraw() public {
         // withdraw to the owner
         msg.sender.transfer(ownerBalances[msg.sender]);
