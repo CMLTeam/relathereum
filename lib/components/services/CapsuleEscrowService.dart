@@ -61,7 +61,7 @@ class CapsuleEscrowService {
             [BigInt.from(capsuleId), description]).send(client);
   }
 
-  static void test() async {
+  static test() async {
     var c = await new CapsuleEscrowService().init();
     await c.checkIn(111);
     await c.checkOut(111);

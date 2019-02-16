@@ -41,6 +41,7 @@ flutter:
     - assets/login-background.jpg
     - assets/abi/GemERC721.json
     - assets/abi/contracts_Test_sol_Test.abi
+    - assets/abi/contracts_CapsuleEscrow_sol_CapsuleEscrow.abi
     - assets/login-image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

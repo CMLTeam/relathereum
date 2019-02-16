@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
+import 'package:flutter_flat_app/components/services/CapsuleEscrowService.dart';
 import 'package:flutter_flat_app/components/services/web3Service.dart';
 import 'package:flutter_flat_app/components/services/web3Service1.dart';
-
 
 class ExampleScreen extends StatefulWidget {
   const ExampleScreen({Key key}) : super(key: key);
@@ -10,10 +10,9 @@ class ExampleScreen extends StatefulWidget {
   ExampleState createState() => new ExampleState();
 }
 
-
 class ExampleState extends State<ExampleScreen> {
-
   BuildContext context;
+
 //  Web3Service web3service = new Web3Service();
   Web3Service1 web3service = new Web3Service1();
 
@@ -23,11 +22,13 @@ class ExampleState extends State<ExampleScreen> {
   }
 
   getGem() async {
-    this.web3service.test();
+//    this.web3service.test();
+    await CapsuleEscrowService.test();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Text('Example Screen. Feel free to adjust.', style: TextStyle(fontSize: 20));
+    return Text('Example Screen. Feel free to adjust.',
+        style: TextStyle(fontSize: 20));
   }
 }
