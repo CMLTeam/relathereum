@@ -3,17 +3,25 @@
 OUT=/tmp/out.txt
 > $OUT
 
-addr=$(truffle migrate --all --reset 2>&1 | tee $OUT | grep capsule_escrow_address | awk '{ print $2 }')
-cat $OUT
-echo $addr
+truffle migrate --all --reset 2>&1 | tee $OUT
+addr_capsule=$(cat $OUT | grep capsule_escrow_address | awk '{ print $2 }')
+addr_test=$(cat $OUT | grep test_address | awk '{ print $2 }')
 
 echo "
-const CAPSULE_ESCROW_CONTRACT_ADDRESS = \"$addr\";
-" > ../lib/ethConfig.dart
+const CAPSULE_ESCROW_CONTRACT_ADDRESS = \"$addr_capsule\";
+const TEST_ADDRESS = \"$addr_test\";
+" | tee ../lib/ethConfig.dart
 
-solcjs --abi contracts/CapsuleEscrow.sol
-cat contracts_CapsuleEscrow_sol_CapsuleEscrow.abi | jq . \
-    > ../assets/abi/contracts_CapsuleEscrow_sol_CapsuleEscrow.abi
-rm contracts_CapsuleEscrow_sol_CapsuleEscrow.abi
+echo "Generate ABI..."
+
+for a in CapsuleEscrow Test
+do
+    solcjs --abi "./contracts/$a.sol"
+
+    abi="contracts_${a}_sol_${a}.abi"
+    echo "ABI $abi"
+    cat "__$abi" | jq . > ../assets/abi/$abi
+    rm __$abi
+done
 
 

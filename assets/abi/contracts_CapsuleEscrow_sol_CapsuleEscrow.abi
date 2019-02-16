@@ -122,25 +122,6 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "capsuleId",
-        "type": "uint32"
-      }
-    ],
-    "name": "free",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
     "inputs": [],
     "name": "withdraw",
@@ -255,7 +236,7 @@
         "type": "uint32"
       }
     ],
-    "name": "occupied",
+    "name": "isFree",
     "outputs": [
       {
         "name": "",
@@ -279,6 +260,25 @@
       {
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "isOccupied",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
       }
     ],
     "payable": false,

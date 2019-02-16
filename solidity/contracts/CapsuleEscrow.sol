@@ -51,12 +51,12 @@ contract CapsuleEscrow {
     }
 
     // state [2]
-    function occupied(uint32 capsuleId) public constant returns(bool) {
+    function isOccupied(uint32 capsuleId) public constant returns(bool) {
         return checkIns[capsuleId].checkedIn != 0;
     }
 
     // state [3]
-    function free(uint32 capsuleId) public constant returns(bool) {
+    function isFree(uint32 capsuleId) public constant returns(bool) {
         return checkIns[capsuleId].checkedOut != 0;
     }
 
@@ -76,11 +76,11 @@ contract CapsuleEscrow {
         require(
             !exists(capsuleId)
             || capsules[capsuleId].owner == msg.sender
-            && (fresh(capsuleId) || free(capsuleId))
+            && (fresh(capsuleId) || isFree(capsuleId))
         );
 
         // send money back to previous customer
-        if(free(capsuleId) && !bad(capsuleId)) {
+        if(isFree(capsuleId) && !bad(capsuleId)) {
             checkIns[capsuleId].customer.transfer(capsules[capsuleId].deposit);
         }
 
@@ -95,10 +95,10 @@ contract CapsuleEscrow {
     function remove(uint32 capsuleId) public {
         // ensure capsule is removed by its owner
         // and no one currently lives in that capsule
-        require(capsules[capsuleId].owner == msg.sender && (fresh(capsuleId) || free(capsuleId)));
+        require(capsules[capsuleId].owner == msg.sender && (fresh(capsuleId) || isFree(capsuleId)));
 
         // send money back to previous customer
-        if(free(capsuleId) && !bad(capsuleId)) {
+        if(isFree(capsuleId) && !bad(capsuleId)) {
             checkIns[capsuleId].customer.transfer(capsules[capsuleId].deposit);
         }
 
@@ -109,7 +109,7 @@ contract CapsuleEscrow {
 
     function checkIn(uint32 capsuleId) public payable {
         // verify capsule exists and is not occupied
-        require(exists(capsuleId) && (fresh(capsuleId) || free(capsuleId) && !bad(capsuleId)));
+        require(exists(capsuleId) && (fresh(capsuleId) || isFree(capsuleId) && !bad(capsuleId)));
 
         // how much ETH we need to lock
         uint256 price = capsules[capsuleId].fee + capsules[capsuleId].deposit;
@@ -143,7 +143,7 @@ contract CapsuleEscrow {
 
     function checkOut(uint32 capsuleId) public {
         // verify sender is checked in
-        require(checkIns[capsuleId].customer == msg.sender && !free(capsuleId) && !bad(capsuleId));
+        require(checkIns[capsuleId].customer == msg.sender && !isFree(capsuleId) && !bad(capsuleId));
 
         // perform the checkout
         checkIns[capsuleId].checkedOut = uint32(now);
@@ -151,7 +151,7 @@ contract CapsuleEscrow {
 
     function reportAnIssue(uint32 capsuleId, string description) public {
         // verify capsule exists and is not occupied
-        require(exists(capsuleId) && !fresh(capsuleId) && free(capsuleId) && !bad(capsuleId));
+        require(exists(capsuleId) && !fresh(capsuleId) && isFree(capsuleId) && !bad(capsuleId));
 
         // top up owner's balance
         ownerBalances[capsules[capsuleId].owner] += capsules[capsuleId].deposit;

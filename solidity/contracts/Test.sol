@@ -14,4 +14,8 @@ contract Test {
     function getval() view public returns (uint) {
         return v;
     }
+
+    function pay() public payable returns (uint) {
+        return msg.value;
+    }
 }
