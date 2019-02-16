@@ -1,0 +1,4 @@
+
+const CAPSULE_ESCROW_CONTRACT_ADDRESS = "0xe4501f64ce4fb00bac99947fcebebf3bc9d10027";
+const TEST_ADDRESS = "0xe4501f64ce4fb00bac99947fcebebf3bc9d10027";
+

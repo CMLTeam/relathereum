@@ -10,7 +10,7 @@ addr_test=$(cat $OUT | grep test_address | awk '{ print $2 }')
 echo "
 const CAPSULE_ESCROW_CONTRACT_ADDRESS = \"$addr_capsule\";
 const TEST_ADDRESS = \"$addr_test\";
-" | tee ../lib/ethConfig.dart
+" | tee ../lib/ethConfigGen.dart
 
 echo "Generate ABI..."
 

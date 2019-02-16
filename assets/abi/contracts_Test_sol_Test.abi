@@ -1,19 +1,5 @@
 [
   {
-    "constant": false,
-    "inputs": [],
-    "name": "pay",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
     "constant": true,
     "inputs": [],
     "name": "getval",

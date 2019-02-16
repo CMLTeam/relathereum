@@ -15,7 +15,7 @@ contract Test {
         return v;
     }
 
-    function pay() public payable returns (uint) {
-        return msg.value;
-    }
+//    function pay() public payable returns (uint) {
+//        return msg.value;
+//    }
 }
