@@ -20,6 +20,7 @@ class AppState extends State<App> {
     return Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(7), border: Border.all(color: Colors.blueAccent, width: 2)),
         padding: EdgeInsets.symmetric(vertical: 3),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
         child: Material(
             color: Colors.white,
             child: InkWell(
