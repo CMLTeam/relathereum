@@ -5,8 +5,9 @@ ExactAssetImage qrCodeLogo = new ExactAssetImage("assets/qr-code.png");
 class ScanQrButton extends StatelessWidget {
 
   final Function scanQr;
+  final bool isTransparent;
 
-  const ScanQrButton({Key key, this.scanQr}) : super(key: key);
+  const ScanQrButton({Key key, this.scanQr, this.isTransparent = false}) : super(key: key);
 
 
   @override
@@ -15,7 +16,7 @@ class ScanQrButton extends StatelessWidget {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(7), border: Border.all(color: Colors.blueAccent, width: 2)),
         padding: EdgeInsets.symmetric(vertical: 3),
         child: Material(
-            color: Colors.white,
+            color: isTransparent ? Colors.transparent : Colors.white,
             child: InkWell(
               child: Container(
                 alignment: Alignment.center,
