@@ -38,7 +38,6 @@ class Web3Service {
         .prepareForCall(gemContract, getGemOwnerFn, [BigInt.from(65635)])
         .call(client);
 
-    var gemOwner = gemOwnerResponce.toString();
-    print("OWNER is: $gemOwner");
+    print("OWNER is: ${gemOwnerResponce[0]}");
   }
 }
