@@ -15,15 +15,14 @@ buildTitle({marginTop: 70.0}) {
       ));
 }
 
-//addGivenTitleToScreenContent(Widget screenContent) {
-//  return Stack(children: [
-//    Positioned(child: screenContent),
-//    Positioned(
-////        right: 50,
-////        top: 60,
-//        child: Center(child: buildTitle(marginTop: 0.0)),
-////        width: 300,
-////        height: 50)
-//    )
-//  ]);
-//}
+Widget addTitleToScreen(Widget screenContent) {
+  return new Stack(children: [
+    Container(
+        child:
+        Column(children: [screenContent])),
+    Container(
+      alignment: Alignment.topCenter,
+      child: Center(child: buildTitle()),
+    )
+  ]);
+}

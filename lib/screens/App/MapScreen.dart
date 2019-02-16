@@ -23,7 +23,7 @@ class AppState extends State<App> {
   }
 
   _buildMaps(Size screenSize) {
-    return Center(
+    return Container(
         child: SizedBox(
       width: screenSize.width,
       height: screenSize.height,
@@ -44,6 +44,7 @@ class AppState extends State<App> {
         .push(MaterialPageRoute(builder: (context) => QrCodeScannerScreen()));
   }
 
+  // Maybe we can used it for moving to user's position
   _mapButton() {
     return RaisedButton(
       child: const Text('Go to London'),
@@ -65,29 +66,14 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    Widget screen = Expanded(
-        child: Container(
-            alignment: Alignment.center, child: CircularProgressIndicator()));
-    screen = Scaffold(
+
+    return Scaffold(
         body: Container(
             color: Colors.white,
-            child: new Stack(children: [
-              Positioned(
-                  top: 20,
-                  child:
-                      Column(children: [_buildMaps(screenSize), _mapButton()])),
-              Positioned(
-                  right: 50,
-                  top: 0,
-                  child: Center(child: buildTitle()),
-                  width: 300,
-                  height: 50)
-            ])),
+            child: addTitleToScreen(_buildMaps(screenSize))),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: ScanQrButton(
           scanQr: launchQrCodeScanner,
         ));
-
-    return screen;
   }
 }
