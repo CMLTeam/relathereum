@@ -22,12 +22,14 @@ class Web3Service1 {
 
     var contractABI = ContractABI.parseFromJSON(jsonContent, "Test");
 
-    var contract = new DeployedContract(contractABI,
-        new EthereumAddress(TEST_ADDRESS), client, credentials);
+    var contract = new DeployedContract(
+        contractABI, new EthereumAddress(TEST_ADDRESS), client, credentials);
 
     var fnAdd = contract.findFunctionsByName("add").first;
     var fnSetval = contract.findFunctionsByName("setval").first;
     var fnGetval = contract.findFunctionsByName("getval").first;
+    var fnPay = contract.findFunctionsByName("pay").first;
+    var fnGetMoney = contract.findFunctionsByName("getMoney").first;
 
     var resp = await new Transaction(keys: credentials, maximumGas: 80000)
         .prepareForCall(
@@ -47,5 +49,19 @@ class Web3Service1 {
 
     res = resp.toString();
     print("RES2 is: $res");
+
+    resp = await new Transaction(keys: credentials, maximumGas: 1000000)
+        .prepareForPaymentCall(
+            contract, fnPay, [], EtherAmount.inWei(BigInt.from(12345)))
+        .send(client);
+
+    res = resp.toString();
+    print("RES3 is: $res");
+
+    resp = await new Transaction(keys: credentials, maximumGas: 800000)
+        .prepareForCall(contract, fnGetMoney, []).call(client);
+
+    res = resp.toString();
+    print("RES4 is: $res");
   }
 }

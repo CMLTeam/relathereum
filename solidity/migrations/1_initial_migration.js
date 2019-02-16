@@ -11,16 +11,19 @@ module.exports = async function (deployer, network, accounts) {
         console.log("[deploy capsule] coverage network - skipping the migration script");
         return;
     }
+     try {
+         await deployer.deploy(CapsuleEscrow);
+         await deployer.deploy(Test);
 
-    await deployer.deploy(CapsuleEscrow);
-    await deployer.deploy(Test);
+         // get deployed instance
+         const capsule = await CapsuleEscrow.deployed();
+         const test = await Test.deployed();
 
-    // get deployed instance
-    const capsule = await CapsuleEscrow.deployed();
-    const test = await CapsuleEscrow.deployed();
-
-    // deployment successful, print capsule address
-    console.log("________________________________________________________________________");
-    console.log("capsule_escrow_address " + capsule.address);
-    console.log("test_address " + test.address);
+         // deployment successful, print capsule address
+         console.log("________________________________________________________________________");
+         console.log("capsule_escrow_address " + capsule.address);
+         console.log("test_address " + test.address);
+     }catch (e) {
+         console.error('Error ', e)
+     }
 };
