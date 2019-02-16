@@ -4,6 +4,10 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  barcode_scan: 0.0.8
+  qr_flutter: 1.1.6
+  path_provider:  0.5.0+1
+  camera: 0.4.0+1
   web3dart: ^0.4.5
 
 dev_dependencies:
@@ -33,8 +37,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/qr-code.png
     - assets/login-background.jpg
     - assets/abi/GemERC721.json
+    - assets/login-image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/.
