@@ -1,5 +1,4 @@
-// Dutch Auction Helper
-const Capsule = artifacts.require("./CapsuleEscrow");
+const CapsuleEscrow = artifacts.require("./CapsuleEscrow");
 
 module.exports = async function(deployer, network, accounts) {
 	if(network === "test") {
@@ -12,11 +11,10 @@ module.exports = async function(deployer, network, accounts) {
 	}
 
 
-	// deploy auction capsule sale
-	await deployer.deploy(Capsule);
+	await deployer.deploy(CapsuleEscrow);
 
 	// get deployed instance
-	const capsule = await Capsule.deployed();
+	const capsule = await CapsuleEscrow.deployed();
 
 	// deployment successful, print capsule address
 	console.log("________________________________________________________________________");

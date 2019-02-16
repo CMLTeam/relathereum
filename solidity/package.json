@@ -17,6 +17,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "./test.sh"
+    "test": "./test.sh",
+    "compile": "truffle compile",
+    "migrate": "truffle migrate --all --reset"
   }
 }
