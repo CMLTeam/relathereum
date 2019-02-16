@@ -1,4 +1,4 @@
-{
+[{
   "contractName": "GemERC721",
   "abi": [
     {
@@ -1502,4 +1502,4 @@
   ],
   "schemaVersion": "2.0.0",
   "updatedAt": "2018-08-06T18:32:24.086Z"
-}
+}]

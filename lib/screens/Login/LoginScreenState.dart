@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_flat_app/screens/Profile/index.dart';
 import 'package:flutter_flat_app/theme/style.dart';
 import 'package:flutter_flat_app/components/TextFields/inputField.dart';
 import 'package:flutter_flat_app/components/Buttons/textButton.dart';
@@ -38,6 +39,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   _onPressed() {
     print("button clicked");
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleScreen()));
   }
 
   onPressed(String routeName) {

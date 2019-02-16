@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flat_app/screens/App/MapScreen.dart';
 import 'package:flutter_flat_app/screens/Login/LoginScreenState.dart';
+import 'package:flutter_flat_app/screens/Profile/index.dart';
 import 'package:flutter_flat_app/theme/style.dart';
 
 class Routes {
@@ -9,6 +10,7 @@ class Routes {
   var routes = <String, WidgetBuilder>{
     "/Login": (BuildContext context) => new LoginScreen(),
     "/App" : (BuildContext context) => new App(),
+    "/ContractTest" : (BuildContext context) => new ExampleScreen(),
   };
 
   Routes() {

@@ -26,7 +26,7 @@ class Web3Service {
     print("JSON content: \n $jsonContent");
 
     var gemContractABI = ContractABI
-        .parseFromJSON(jsonContent, "gemContractAbi");
+        .parseFromJSON(jsonContent, "GemERC721");
 
     var gemContract = new DeployedContract(
         gemContractABI, new EthereumAddress(GEM_ERC721), client, credentials);
