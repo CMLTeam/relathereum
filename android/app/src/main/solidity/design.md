@@ -1,10 +1,18 @@
 
+### Overview
+
 Right after scanning
 QR code of capsule (`capsule_id`) user (`user_address`) has 2 options: 
-+ either report an issue 
++ either report an issue and don't start the stay 
 + OR start his stay.
 
-For simplicity let's consider the payment and insurance to be fixed values.
+For simplicity let's consider the payment and insurance parts to be fixed pre-configured values.
+
+### Issue Scenario
+
+1. `report_an_issue(report_user_address, capsule_id, string description)` -
+user reports issue for the capsule. 
+This means that **previous** user will **not** receive his insurance payment.
 
 ### Usual Scenario
 
@@ -14,10 +22,3 @@ Sending the money means user approves the capsule is OK and he starts his check 
 
 1. `check_out(user_address, capsule_id)` - user checks out the capsule after successful stay.
 In this case **previous** user received his insurance payment back.
-
-### Issue Scenario
-
-1. `report_an_issue(report_user_address, capsule_id, string description)` -
-user reports issue for the capsule. 
-This means that **previous** user will **not** receive his insurance payment.
-
