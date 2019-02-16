@@ -7,7 +7,7 @@ buildTitle({marginTop: 70.0}) {
       margin: EdgeInsets.fromLTRB(0, marginTop, 0, 0),
 
       child: Text(
-        "RELATHERIUM",
+        "RELATHEREUM",
         style: TextStyle(
             fontSize: 36,
             color: Colors.blueAccent,
