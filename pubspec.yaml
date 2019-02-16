@@ -34,6 +34,7 @@ flutter:
   assets:
     - assets/qr-code.png
     - assets/login-background.jpg
+    - assets/login-image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/.
