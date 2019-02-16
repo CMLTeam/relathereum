@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-ExactAssetImage qrCodeLogo = new ExactAssetImage("assets/qr-code.png");
+ExactAssetImage qrCodeLogo = new ExactAssetImage("assets/qr-code_1.png");
+
+
 
 class ScanQrButton extends StatelessWidget {
 
@@ -24,17 +27,12 @@ class ScanQrButton extends StatelessWidget {
                   children: <Widget>[
                     Container(
                         padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
-                        child: new Image(
-                          image: qrCodeLogo,
-                          width: 50,
-                          height: 50,
-                        )),
+                        child: Tab(icon: Icon(QrCode.qr_code, color: Colors.blueAccent,))),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: Text(
                         "SCAN TO RELAX",
                         style: TextStyle(
-
                             color: Colors.blueAccent,
                             fontSize: 23,
                             fontWeight: FontWeight.bold ),
@@ -52,4 +50,12 @@ class ScanQrButton extends StatelessWidget {
             )));
   }
 
+}
+
+class QrCode {
+  QrCode._();
+
+  static const _kFontFam = 'QrCode';
+
+  static const IconData qr_code = const IconData(0xe800, fontFamily: _kFontFam);
 }

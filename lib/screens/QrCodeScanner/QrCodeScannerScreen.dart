@@ -1,8 +1,12 @@
-import 'dart:async';
-
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import "../../components/Buttons/ScanQrButton.dart";
+import "../../utils/AlertModal.dart";
+import "../../utils/common.dart";
+import '../Unlock/UnlockScreen.dart';
 
 class QrCodeScannerScreen extends StatefulWidget {
   @override
@@ -10,67 +14,116 @@ class QrCodeScannerScreen extends StatefulWidget {
 }
 
 class _ScanState extends State<QrCodeScannerScreen> {
-  String barcode = "";
+  CameraController controller;
 
   @override
   initState() {
     super.initState();
+    controller = CameraController(
+        CameraDescription(
+            lensDirection: CameraLensDirection.back, name: "0"),
+        ResolutionPreset.high);
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
+  }
+
+  Widget buildCameraScreen() {
+
   }
 
   @override
   Widget build(BuildContext context) {
+
+    Widget screen = Container();
+    if (controller != null && controller.value.isInitialized) {
+      screen = Expanded(child: AspectRatio(
+        aspectRatio: 1,
+        child: CameraPreview(controller),
+      ));
+    }
+
+
     return Scaffold(
-        appBar: new AppBar(
-          title: new Text('QR Code Scanner'),
-        ),
-        body: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
-                    onPressed: scan,
-                    child: const Text('START CAMERA SCAN')),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  barcode,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
+        body: Container(
+            color: Colors.white,
+            child: Column(children: [buildTitle(), screen])),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: ScanQrButton(
+          scanQr: scan, isTransparent: true,
         ));
   }
 
-  Future scan() async {
-    try {
-      String barcode = await BarcodeScanner.scan();
+  someWidget() => Scaffold(
+          body: new Center(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  splashColor: Colors.blueGrey,
+                  onPressed: scan,
+                  child: const Text('START CAMERA SCAN')),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text(
+                "dsfdsfd",
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ));
 
-      setState(() => this.barcode = barcode);
-//      Navigator.push(
-//        context,
-//        MaterialPageRoute(builder: (context) => TestScreen(idNumber: barcode,)),
-//      );
+  scan() async {
+    try {
+
+      // FIXME: delete after testing
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UnlockScreen(capsulaIdNumber: "QR_code",)),
+      // FIXME: uncomment after testing
+//      String barcode = await BarcodeScanner.scan();
+//      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UnlockScreen(capsulaIdNumber: barcode,)),
+      );
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
-        setState(() {
-          this.barcode = 'The user did not grant the camera permission!';
-        });
+        showDialog(
+            context: context,
+            builder: (context) => AlertModal(
+                  header: "PERMISSIN DENIED",
+                  message:
+                      "Your app cannot have permission to access to camera",
+                  type: AlertType.error,
+                  pressButton: () => null,
+                ));
       } else {
-        setState(() => this.barcode = 'Unknown error: $e');
+        showDialog(
+            context: context,
+            builder: (context) => AlertModal(
+                  header: "UNKNOWN ERROR",
+                  message: "There is some unknown error",
+                  type: AlertType.error,
+                  pressButton: () => null,
+                ));
       }
     } on FormatException {
-      setState(() => this.barcode =
-          'null (User returned using the "back"-button before scanning anything. Result)');
+      print("User didn't scan any QRcode and press back");
     } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
+      showDialog(
+          context: context,
+          builder: (context) => AlertModal(
+                header: "UNKNOWN ERROR",
+                message: "There is some unknown error",
+                type: AlertType.error,
+                pressButton: () => null,
+              ));
     }
   }
 }
