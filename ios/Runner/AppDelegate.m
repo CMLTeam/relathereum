@@ -1,7 +1,8 @@
 #include "AppDelegate.h"
 #include "GeneratedPluginRegistrant.h"
+#import "GoogleMaps/GoogleMaps.h"
 
-    @implementation AppDelegate
+@implementation AppDelegate
 
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 [GMSServices provideAPIKey:@"AIzaSyAZlNFjWYqHW7SL0hDysQi_M_9lOg-G2gY"];
