@@ -1,4 +1,4 @@
-package com.yourcompany.flutterflatapp;
+package com.cmlteam.flutterflatapp;
 
 import android.os.Bundle;
 

@@ -14,7 +14,7 @@
              <!-- reverse url of your client id, for example: -->
     <string>com.googleusercontent.apps.284876987503-g6go45ksnj5r4uv4k9lschjlshpmbsh4</string>
              <!-- bundle id, for example: -->
-                <string>com.yourcompany.flutterFlatApp</string>
+                <string>com.cmlteam.flutterFlatApp</string>
              </array>
           </dict>
       </array>
