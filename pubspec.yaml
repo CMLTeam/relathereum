@@ -4,6 +4,7 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  web3dart: ^0.4.5
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +34,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/login-background.jpg
+    - assets/abi/GemERC721.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/.
