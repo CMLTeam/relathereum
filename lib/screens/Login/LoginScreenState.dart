@@ -19,7 +19,6 @@ class LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController scrollController = new ScrollController();
   String _email;
-  String _password;
 
   initState() {
     super.initState();
@@ -43,15 +42,15 @@ class LoginScreenState extends State<LoginScreen> {
         .showSnackBar(new SnackBar(content: new Text(value)));
   }
 
-  verifyUser(String email, String password) {
-    print(">>> email/password : $email / $password");
+  verifyUser(String email) {
+    print(">>> Phone : $email");
     return true;
   }
 
   void _handleSubmitted() {
     final FormState form = formKey.currentState;
     form.save();
-    if (verifyUser(_email, _password)) {
+    if (verifyUser(_email)) {
       print("Login Successfull");
       Navigator.pushNamed(context, "/App");
     } else {
@@ -100,7 +99,7 @@ class LoginScreenState extends State<LoginScreen> {
                           child: new Column(
                             children: <Widget>[
                               new InputField(
-                                  hintText: "Email",
+                                  hintText: "Phone number",
                                   obscureText: false,
                                   textInputType: TextInputType.text,
                                   textStyle: inputTextStyle,
@@ -111,19 +110,8 @@ class LoginScreenState extends State<LoginScreen> {
                                   onSaved: (String email) {
                                     _email = email;
                                   }),
-                              new InputField(
-                                  hintText: "Password",
-                                  obscureText: true,
-                                  textInputType: TextInputType.text,
-                                  textStyle: inputTextStyle,
-                                  textFieldColor: textFieldColor,
-                                  iconColor: Colors.white,
-                                  bottomMargin: 30.0,
-                                  onSaved: (String password) {
-                                    _password = password;
-                                  }),
                               new RoundedButton(
-                                buttonName: "LOGIN",
+                                buttonName: "NEXT",
                                 onTap: _handleSubmitted,
                                 width: screenSize.width,
                                 height: 50.0,
