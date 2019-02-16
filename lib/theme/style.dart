@@ -16,10 +16,10 @@ ThemeData appTheme = new ThemeData(
 
 Color textFieldColor = const Color(0xFFcbd8e7);
 
-Color primaryColor = const Color.fromRGBO(39,169,225,1);
+Color primaryColor = Colors.blueAccent;
 
 TextStyle buttonTextStyle = const TextStyle(
-    color: const Color.fromRGBO(255, 255, 255, 0.8),
+    color: Colors.blueAccent,
     fontSize: 14.0,
     fontFamily: "Roboto",
     fontWeight: FontWeight.bold);
