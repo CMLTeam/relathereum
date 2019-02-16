@@ -1,4 +1,4 @@
-pragma solidity 0.4.23;
+pragma solidity ^0.4.23;
 
 contract CapsuleEscrow {
     // pack capsule struct into 256 bits to occupy single storage slot
