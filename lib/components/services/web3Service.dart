@@ -23,8 +23,6 @@ class Web3Service {
 
     String jsonContent = await rootBundle.loadString(gemContractAbi);
 
-    print("JSON content: \n $jsonContent");
-
     var gemContractABI = ContractABI
         .parseFromJSON(jsonContent, "GemERC721");
 
@@ -37,7 +35,7 @@ class Web3Service {
 
     var gemOwnerResponce = await new Transaction(
         keys: credentials, maximumGas: 80000)
-        .prepareForCall(gemContract, getGemOwnerFn, ["65635"])
+        .prepareForCall(gemContract, getGemOwnerFn, [BigInt.from(65635)])
         .call(client);
 
     var gemOwner = gemOwnerResponce.toString();
