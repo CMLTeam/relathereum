@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_flat_app/screens/Login/ConfirmCodeScreen.dart';
 import 'package:flutter_flat_app/screens/Profile/index.dart';
 import 'package:flutter_flat_app/theme/style.dart';
 import 'package:flutter_flat_app/components/TextFields/inputField.dart';
@@ -26,20 +27,18 @@ class LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController scrollController = new ScrollController();
-  String _email;
+  String _phone;
 
   initState() {
     super.initState();
     initAuth();
   }
 
-  initAuth() async {
-//    Navigator.pushNamed(context, "/App");
-  }
+  initAuth() async {}
 
   _onPressed() {
-    print("button clicked");
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ExampleScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ExampleScreen()));
   }
 
   onPressed(String routeName) {
@@ -51,17 +50,18 @@ class LoginScreenState extends State<LoginScreen> {
         .showSnackBar(new SnackBar(content: new Text(value)));
   }
 
-  verifyUser(String email) {
-    print(">>> Phone : $email");
+  verifyUser(String phone) {
+    return true;
     return true;
   }
 
   void _handleSubmitted() {
     final FormState form = formKey.currentState;
     form.save();
-    if (verifyUser(_email)) {
-      print("Login Successfull");
-      Navigator.pushNamed(context, "/App");
+    if (verifyUser(_phone)) {
+      print("Login Successfull. phone: $_phone");
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => ConfirmCodeScreen()));
     } else {
       showInSnackBar("Login or Password is wrong");
     }
@@ -112,8 +112,8 @@ class LoginScreenState extends State<LoginScreen> {
                                   icon: null,
                                   iconColor: Colors.white,
                                   bottomMargin: 30.0,
-                                  onSaved: (String email) {
-                                    _email = email;
+                                  onSaved: (String phone) {
+                                    _phone = phone;
                                   }),
                               new RoundedButton(
                                 buttonName: "NEXT",
