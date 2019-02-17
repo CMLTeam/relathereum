@@ -14,14 +14,13 @@ class RoundedButton extends StatelessWidget {
 
   const RoundedButton({Key key, this.press, this.isTransparent = false, this.title, this.icon, }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(7), border: Border.all(color: Colors.blueAccent, width: 2)),
-        padding: EdgeInsets.symmetric(vertical: 3),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(7), border: Border.all(color: Colors.blueAccent, width: 2),
+        color: isTransparent ? Colors.transparent : Colors.white),
         child: Material(
-            color: isTransparent ? Colors.transparent : Colors.white,
+            color: Colors.transparent,
             child: InkWell(
               child: Container(
                 alignment: Alignment.center,

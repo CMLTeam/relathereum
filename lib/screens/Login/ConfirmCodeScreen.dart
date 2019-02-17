@@ -1,71 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_flat_app/screens/Login/ConfirmCodeScreen.dart';
-import 'package:flutter_flat_app/screens/Profile/index.dart';
-import 'package:flutter_flat_app/theme/style.dart';
-import 'package:flutter_flat_app/components/TextFields/inputField.dart';
-import 'package:flutter_flat_app/components/Buttons/textButton.dart';
 import 'package:flutter_flat_app/components/Buttons/roundedButton.dart';
+import 'package:flutter_flat_app/components/Buttons/textButton.dart';
+import 'package:flutter_flat_app/components/TextFields/inputField.dart';
+import 'package:flutter_flat_app/screens/App/MapScreen.dart';
+import 'package:flutter_flat_app/theme/style.dart';
 import 'package:flutter_flat_app/utils/common.dart';
 
-DecorationImage backgroundImage = new DecorationImage(
-  image: new ExactAssetImage('assets/login-background.jpg'),
-  fit: BoxFit.cover,
-);
-
-ExactAssetImage loginImage = new ExactAssetImage("assets/login-image.png");
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
-
+class ConfirmCodeScreen extends StatefulWidget {
   @override
-  LoginScreenState createState() => new LoginScreenState();
+  State<StatefulWidget> createState() {
+    return new ConfirmCodeState();
+  }
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class ConfirmCodeState extends State<ConfirmCodeScreen> {
   BuildContext context;
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController scrollController = new ScrollController();
-  String _phone;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String _code;
 
   initState() {
     super.initState();
-    initAuth();
   }
 
-  initAuth() async {}
-
-  _onPressed() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ExampleScreen()));
-  }
-
-  onPressed(String routeName) {
-    Navigator.of(context).pushNamed(routeName);
-  }
-
-  void showInSnackBar(String value) {
-    _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text(value)));
-  }
-
-  verifyUser(String phone) {
-    return true;
+  verifyCode(String phone) {
     return true;
   }
 
   void _handleSubmitted() {
     final FormState form = formKey.currentState;
     form.save();
-    if (verifyUser(_phone)) {
-      print("Login Successfull. phone: $_phone");
+    if (verifyCode(_code)) {
+      print("Login Successfull. code: $_code");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => ConfirmCodeScreen()));
+          .push(MaterialPageRoute(builder: (context) => MapScreen()));
     } else {
-      showInSnackBar("Login or Password is wrong");
+      print("Login or Password is wrong");
     }
-    //}
   }
 
   @override
@@ -90,12 +63,6 @@ class LoginScreenState extends State<LoginScreen> {
                       children: <Widget>[],
                     ),
                   ),
-                  Container(
-                    child: Image(
-                      image: loginImage,
-                    ),
-                    height: 250,
-                  ),
                   new Container(
                     child: new Column(
                       children: <Widget>[
@@ -104,7 +71,7 @@ class LoginScreenState extends State<LoginScreen> {
                           child: new Column(
                             children: <Widget>[
                               new InputField(
-                                  hintText: "Phone number",
+                                  hintText: "Code ",
                                   obscureText: false,
                                   textInputType: TextInputType.text,
                                   textStyle: inputTextStyle,
@@ -112,14 +79,14 @@ class LoginScreenState extends State<LoginScreen> {
                                   icon: null,
                                   iconColor: Colors.white,
                                   bottomMargin: 30.0,
-                                  onSaved: (String phone) {
-                                    _phone = phone;
+                                  onSaved: (String code) {
+                                    _code = code;
                                   }),
                               new RoundedButton(
-                                buttonName: "NEXT",
+                                buttonName: "Next",
                                 onTap: _handleSubmitted,
-                                width: screenSize.width,
-                                height: 60.0,
+                                width: 200,
+                                height: 40.0,
                                 bottomMargin: 10.0,
                                 borderWidth: 0.0,
                                 buttonColor: primaryColor,
@@ -127,14 +94,11 @@ class LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new TextButton(
-                                buttonName: "Need Help?",
-                                onPressed: _onPressed,
-                                buttonTextStyle: buttonTextStyle)
-                          ],
+                        new Center(
+                          child: (new TextButton(
+                              buttonName: "Resend code",
+                              onPressed: () => {},
+                              buttonTextStyle: buttonTextStyle)),
                         ),
                         Container(padding: EdgeInsets.fromLTRB(0, 0, 0, 60))
                       ],
