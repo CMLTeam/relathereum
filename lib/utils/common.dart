@@ -19,7 +19,10 @@ Widget addTitleToScreen(Widget screenContent) {
   return new Stack(children: [
     Container(
         child:
-        Column(children: [screenContent])),
+        Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [screenContent])),
     Container(
       alignment: Alignment.topCenter,
       child: Center(child: buildTitle()),

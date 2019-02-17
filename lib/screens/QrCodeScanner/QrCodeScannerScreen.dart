@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_flat_app/screens/Relaxing/TrackRelaxing.dart';
 
 import "../../components/Buttons/ScanQrButton.dart";
 import "../../utils/AlertModal.dart";
@@ -59,7 +60,7 @@ class _ScanState extends State<QrCodeScannerScreen> {
     try {
 
       // FIXME: delete after testing
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UnlockScreen(capsulaIdNumber: "QR_code",)),
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrackScreen()), // UnlockScreen(capsulaIdNumber: "QR_code",)),
       // FIXME: uncomment after testing
 //      String barcode = await BarcodeScanner.scan();
 //      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UnlockScreen(capsulaIdNumber: barcode,)),
