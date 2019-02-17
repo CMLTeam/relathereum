@@ -17,6 +17,26 @@ class AppState extends State<App> {
   GoogleMapController mapController;
 
   void _onMapCreated(GoogleMapController controller) {
+    controller.addMarker(MarkerOptions(
+      position: LatLng(51.5160895, -0.1294527),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
+    controller.addMarker(MarkerOptions(
+      position: LatLng(51.4815896, -0.1177538),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
+    controller.addMarker(MarkerOptions(
+      position: LatLng(51.4815896, -0.1477538),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
+    controller.addMarker(MarkerOptions(
+      position: LatLng(51.5315896, -0.1577538),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
+    controller.addMarker(MarkerOptions(
+      position: LatLng(51.534896, -0.1077538),
+      icon: BitmapDescriptor.defaultMarker,
+    ));
     setState(() {
       mapController = controller;
     });
@@ -25,18 +45,18 @@ class AppState extends State<App> {
   _buildMaps(Size screenSize) {
     return Container(
         child: SizedBox(
-      width: screenSize.width,
-      height: screenSize.height,
-      child: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          bearing: 270.0,
-          target: LatLng(51.5160895, -0.1294527),
-          tilt: 30.0,
-          zoom: 12.0,
-        ),
-      ),
-    ));
+          width: screenSize.width,
+          height: screenSize.height,
+          child: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              bearing: 270.0,
+              target: LatLng(51.5160895, -0.1294527),
+              tilt: 30.0,
+              zoom: 12.0,
+            ),
+          ),
+        ));
   }
 
   launchQrCodeScanner() {
@@ -51,21 +71,23 @@ class AppState extends State<App> {
       onPressed: mapController == null
           ? null
           : () {
-              mapController.animateCamera(CameraUpdate.newCameraPosition(
-                const CameraPosition(
-                  bearing: 270.0,
-                  target: LatLng(51.5160895, -0.1294527),
-                  tilt: 30.0,
-                  zoom: 17.0,
-                ),
-              ));
-            },
+        mapController.animateCamera(CameraUpdate.newCameraPosition(
+          const CameraPosition(
+            bearing: 270.0,
+            target: LatLng(51.5160895, -0.1294527),
+            tilt: 30.0,
+            zoom: 17.0,
+          ),
+        ));
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
         body: Container(
