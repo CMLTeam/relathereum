@@ -8,7 +8,7 @@ class TrackScreen extends StatefulWidget {
 
   final String capsuleId;
 
-  const TrackScreen({Key key, this.capsuleId}) : super(key: key) {
+  TrackScreen({Key key, this.capsuleId}) : super(key: key) {
     signIn(capsuleId);
   }
 
