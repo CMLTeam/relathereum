@@ -6,7 +6,7 @@ import 'package:flutter_flat_app/screens/Profile/index.dart';
 import 'package:flutter_flat_app/theme/style.dart';
 import 'package:flutter_flat_app/components/TextFields/inputField.dart';
 import 'package:flutter_flat_app/components/Buttons/textButton.dart';
-import 'package:flutter_flat_app/components/Buttons/roundedButton.dart';
+import 'package:flutter_flat_app/components/Buttons/RoundedButton1.dart';
 import 'package:flutter_flat_app/utils/common.dart';
 
 DecorationImage backgroundImage = new DecorationImage(
