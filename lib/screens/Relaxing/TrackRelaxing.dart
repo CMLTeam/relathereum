@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_flat_app/components/services/CapsuleEscrowService.dart';
 import 'package:flutter_flat_app/utils/common.dart';
 import 'package:intl/intl.dart';
 
@@ -7,10 +8,17 @@ class TrackScreen extends StatefulWidget {
 
   final String capsuleId;
 
-  const TrackScreen({Key key, this.capsuleId}) : super(key: key);
+  const TrackScreen({Key key, this.capsuleId}) : super(key: key) {
+    signIn(capsuleId);
+  }
 
   @override
   State<StatefulWidget> createState() => TrackState();
+
+  void signIn(String capsuleId) async {
+    var c = await CapsuleEscrowService().init();
+    c.checkIn(int.parse(capsuleId));
+  }
 }
 
 class TrackState extends State<TrackScreen> {
@@ -21,14 +29,13 @@ class TrackState extends State<TrackScreen> {
   String timeStayedString;
   var f = new NumberFormat("00");
 
-  startTracking() {
+  startTracking() async {
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
 
 
   @override
   Widget build(BuildContext context) {
-
     Widget screen = Container(
         alignment: Alignment.center,
         child:
@@ -47,8 +54,8 @@ class TrackState extends State<TrackScreen> {
     );
 
     return Scaffold(
-        body: addTitleToScreen(screen),
-        );
+      body: addTitleToScreen(screen),
+    );
   }
 
   @override
@@ -73,6 +80,8 @@ class TrackState extends State<TrackScreen> {
   }
 
   String _formatDuration(Duration duration) {
-    return "Relaxing time ${f.format(duration.inHours)}:${f.format(duration.inMinutes - duration.inHours * 60)}:${f.format(duration.inSeconds - duration.inMinutes * 60)}";
+    return "Relaxing time ${f.format(duration.inHours)}:${f.format(
+        duration.inMinutes - duration.inHours * 60)}:${f.format(
+        duration.inSeconds - duration.inMinutes * 60)}";
   }
 }

@@ -16,7 +16,7 @@ class UnlockScreen extends StatefulWidget {
 
 class _UnlockState extends State<UnlockScreen> {
   String capsuleIdNumber = "";
-  List<SmartContract> smartContracts = [];
+  List<CapsuleStatus> capsuleStatuses = [];
   String capsuleStatus = '';
   bool dataLoaded = false;
 
@@ -30,15 +30,15 @@ class _UnlockState extends State<UnlockScreen> {
 
   _fetchStatus() async {
     var status = cabinStatus['status'];
-    List<SmartContract> data = (cabinStatus["smartContracts"] as List)
-        .map((dto) => new SmartContract.fromJson(dto))
+    List<CapsuleStatus> data = (cabinStatus["smartContracts"] as List)
+        .map((dto) => new CapsuleStatus.fromJson(dto))
         .toList();
 
     print(data);
 
     setState(() {
       capsuleIdNumber = widget.capsulaIdNumber;
-      smartContracts = data;
+      capsuleStatuses = data;
       capsuleStatus = status;
       dataLoaded = true;
     });
@@ -75,8 +75,7 @@ class _UnlockState extends State<UnlockScreen> {
         ),
       );
 
-  Widget _buildContractsTable() =>
-      Padding(
+  Widget _buildStatusesTable() => Padding(
       padding: EdgeInsets.fromLTRB(5, 29, 5, 0),
       child: Container(
           height: 400,
@@ -86,45 +85,51 @@ class _UnlockState extends State<UnlockScreen> {
               borderRadius: BorderRadius.circular(10)),
           child: Column(children: [
             _buildTableRow(
-                isHeader: true, content: ["Grade", "TxHash", "Details", "Date"
-            ]),
-            Container(child: Expanded(
-                child: ListView.builder(scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemBuilder: (context, ind) => _rowTableBuilder(context, ind),
-                  itemCount: smartContracts.length,)))
-          ])
-      ));
+                isHeader: true,
+                content: ["Grade", "TxHash", "Details", "Date"]),
+            Container(
+                child: Expanded(
+                    child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (context, ind) => _rowTableBuilder(context, ind),
+              itemCount: capsuleStatuses.length,
+            )))
+          ])));
 
   String trim(String string, int length) =>
       string.length <= length ? string : string.substring(0, length) + "...";
 
   Widget _rowTableBuilder(context, ind) {
-    SmartContract contract = smartContracts[ind];
+    CapsuleStatus contract = capsuleStatuses[ind];
 
-    if (contract.grade == "RENOVATED")
-      return _buildRenovatedState(contract);
-    return _buildTableRow(isHeader: false,
-        content: [
-          contract.grade,
-          trim(contract.txHash, 12),
-          trim(contract.details, 25),
-          formatter.format(contract.date)
-        ]);
+    if (contract.grade == "RENOVATED") return _buildRenovatedState(contract);
+    return _buildTableRow(isHeader: false, content: [
+      contract.grade,
+      trim(contract.txHash, 12),
+      trim(contract.details, 25),
+      formatter.format(contract.date)
+    ]);
   }
 
-  Widget _buildRenovatedState(SmartContract contract) {
-    var content = "Capsule Was Renovated At ${formatter.format(
-        contract.date)} \n" +
-        "Resolution: ${contract.details}";
+  Widget _buildRenovatedState(CapsuleStatus contract) {
+    var content =
+        "Capsule Was Renovated At ${formatter.format(contract.date)} \n" +
+            "Resolution: ${contract.details}";
 
-    return Container(padding: EdgeInsets.fromLTRB(45, 10, 45, 10),
+    return Container(
+        padding: EdgeInsets.fromLTRB(45, 10, 45, 10),
         color: Color.fromRGBO(126, 211, 33, 1),
-        child: Text(content,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),));
+        child: Text(
+          content,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        ));
   }
 
-  unlockCapsule()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>TrackScreen(capsuleId: capsuleIdNumber,)));
+  unlockCapsule() => Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => TrackScreen(
+            capsuleId: capsuleIdNumber,
+          )));
 
   Widget _buildTableRow({isHeader = false, List<String> content}) {
     if (content.length != 4) return Container();
@@ -171,7 +176,6 @@ class _UnlockState extends State<UnlockScreen> {
         ));
   }
 
-
   @override
   Widget build(BuildContext context) {
 //    return Container(child: Text("dskkvbdsjbsjdkfj"),);
@@ -190,28 +194,31 @@ class _UnlockState extends State<UnlockScreen> {
               children: <Widget>[
                 isGood ? _buildInfoSection() : Container(),
                 _buildStatusSection(),
-                _buildContractsTable(),
+                _buildStatusesTable(),
                 RoundedButton(
-                  isTransparent: false, press: unlockCapsule, title: "UNLOCK", icon: Icons.lock_open,)
+                  isTransparent: false,
+                  press: unlockCapsule,
+                  title: "UNLOCK",
+                  icon: Icons.lock_open,
+                )
               ],
-            )
-        )));
+            ))));
   }
 }
 
-class SmartContract {
+class CapsuleStatus {
   final String grade;
   final String txHash;
   final String details;
   final DateTime date;
 
-  SmartContract({this.grade, this.txHash, this.details, this.date});
+  CapsuleStatus({this.grade, this.txHash, this.details, this.date});
 
-  factory SmartContract.fromJson(Map<String, dynamic> json) {
+  factory CapsuleStatus.fromJson(Map<String, dynamic> json) {
     DateTime date = DateTime.tryParse(json['date']);
-    return SmartContract(
+    return CapsuleStatus(
         grade: json['grade'].toString(),
-        txHash: json['txHash'].toString(),
+        txHash: json['txHash'].toString().toLowerCase(),
         details: json['details'].toString(),
         date: date);
   }
@@ -227,7 +234,7 @@ const cabinStatus = {
   "smartContracts": [
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0xf4a2eff88a408ff4c4550148151c33c93442619e",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
@@ -239,43 +246,43 @@ const cabinStatus = {
     },
     {
       "grade": "BAD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0xda6d57c4ce2284322647f39cedf167290f13e76f",
       "details": "Awful WiFi connect",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "BAD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x9b6f69dff31d28bad4f5e269916c8b0762e8b7c8",
       "details": "Internet sucks here!",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x1236eB83271934e5c6294C1cFEC167b2EC10aE7b",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x5E032243d507C743b061eF021e2EC7fcc6d3ab89",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0xed45a9971a2d0738d43E3DB27d05beD1cc5eA8d1",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x5e032243d507C743b061eF021e2EC7fcc6d3ab89",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x8f9CbfcfbE2892Dd3dcd28677d8e9b5c7BD61275",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
@@ -287,25 +294,25 @@ const cabinStatus = {
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0xa3229FA37b2784d21D9Fe8aE606a8A3eE0266124",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x20767CF92F79B2A866339A86326751C400116305",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x076Cb46aA43201eA141E70d2dF0452f9539f9B29",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
     {
       "grade": "GOOD",
-      "txHash": "0xklsdfj73284smdb",
+      "txHash": "0x294ad0337b3b903b908113c3cd4494dbc74e09f5",
       "details": "N/A",
       "date": "2019-02-17 10:21"
     },
