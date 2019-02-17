@@ -9,7 +9,6 @@ class Routes {
   //App - single enter point after user is logged in.
   var routes = <String, WidgetBuilder>{
     "/Login": (BuildContext context) => new LoginScreen(),
-    "/App" : (BuildContext context) => new App(),
     "/ContractTest" : (BuildContext context) => new ExampleScreen(),
   };
 

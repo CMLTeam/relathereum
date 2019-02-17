@@ -12,16 +12,16 @@ import '../Unlock/UnlockScreen.dart';
 ExactAssetImage qrCodeLogo = new ExactAssetImage("assets/qr-code.png");
 var location = new Location();
 
-class App extends StatefulWidget {
-  const App({Key key}) : super(key: key);
+class MapScreen extends StatefulWidget {
+  const MapScreen({Key key}) : super(key: key);
 
   @override
-  AppState createState() => new AppState();
+  MapScreenState createState() => new MapScreenState();
 }
 
-class AppState extends State<App> {
+class MapScreenState extends State<MapScreen> {
   GoogleMapController mapController;
-  Future await500 = new Future.delayed(const Duration(milliseconds: 1000));
+  Future await500 = new Future.delayed(const Duration(milliseconds: 500));
 
   initState() {
     super.initState();
@@ -36,7 +36,6 @@ class AppState extends State<App> {
 
   void _onMapCreated(GoogleMapController controller) async {
     var coors = await locateToCurrentCoors();
-    //TODO change hardcode to locations in Штутгарт
     controller.addMarker(MarkerOptions(
       position: LatLng(coors[0] + 0.0002, coors[1] - 0.0003),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
@@ -78,14 +77,14 @@ class AppState extends State<App> {
     return Container(
         child: SizedBox(
       width: screenSize.width,
-      height: screenSize.height-10,
+      height: screenSize.height - 10,
       child: GoogleMap(
         mapType: MapType.terrain,
         onMapCreated: _onMapCreated,
         myLocationEnabled: true,
         initialCameraPosition: CameraPosition(
           bearing: 270.0,
-          target: LatLng(51.5160895, -0.1294527),
+          target: LatLng(48.78043685, 9.17303474),
           tilt: 30.0,
           zoom: 12.0,
         ),
