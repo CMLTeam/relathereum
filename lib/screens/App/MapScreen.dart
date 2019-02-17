@@ -22,11 +22,11 @@ class AppState extends State<App> {
   initState() {
     super.initState();
     locateToCurrentCoors();
-    location.onLocationChanged().listen((Map<String, double> currentLocation) {
-      print(
-          "listener: (${currentLocation["latitude"]} | ${currentLocation["longitude"]}");
-      _goToLocation(currentLocation['latitude'], currentLocation['longitude']);
-    });
+//    location.onLocationChanged().listen((Map<String, double> currentLocation) {
+//      print(
+//          "listener: (${currentLocation["latitude"]} | ${currentLocation["longitude"]}");
+//      _goToLocation(currentLocation['latitude'], currentLocation['longitude']);
+//    });
   }
 
   void locateToCurrentCoors() async {
