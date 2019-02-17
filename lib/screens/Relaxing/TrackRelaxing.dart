@@ -31,19 +31,21 @@ class TrackState extends State<TrackScreen> {
   String timeStayedString;
   var f = new NumberFormat("00");
   var priceFormat = new NumberFormat("##.#####");
+  Timer timer;
 
-  startTracking() async {
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+  startTracking() {
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
 
   stopTracking() async {
     lock = true;
-    var c = await CapsuleEscrowService().init();
-    c.checkOut(int.parse(widget.capsuleId));
+    if (timer != null) timer.cancel();
     Future.delayed(const Duration(milliseconds: 4000), () {
       Navigator.popUntil(
           context, ModalRoute.withName(Navigator.defaultRouteName));
     });
+    var c = await CapsuleEscrowService().init();
+    c.checkOut(int.parse(widget.capsuleId));
   }
 
   @override
