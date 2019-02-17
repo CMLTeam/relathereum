@@ -45,6 +45,7 @@ class _UnlockState extends State<UnlockScreen> {
   }
 
   Container _buildInfoSection() => Container(
+      padding: EdgeInsets.fromLTRB(16, 22, 0, 0),
       alignment: Alignment.center,
       child: Text(
         "Earn 30 minutes of stay for free by unlocking it now!",
@@ -187,15 +188,18 @@ class _UnlockState extends State<UnlockScreen> {
     bool isGood = capsuleStatus == 'Renovated';
 
     return Scaffold(
-        body: addTitleToScreen(Container(
-            padding: EdgeInsets.only(top: 10),
-            child: (Column(
+      body: addTitleToScreen(Flexible(
+          child: Container(
+              padding: EdgeInsets.only(top: 137),
+              child: (ListView(
+            scrollDirection: Axis.vertical,
+
               children: <Widget>[
                 isGood ? _buildInfoSection() : Container(),
                 _buildStatusSection(),
                 _buildStatusesTable(),
               ],
-            ))
+          )))
         )),
       floatingActionButton: Container(alignment: Alignment.bottomCenter,child: RoundedButton(
         isTransparent: false,

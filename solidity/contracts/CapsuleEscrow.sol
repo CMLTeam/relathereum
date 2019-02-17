@@ -109,7 +109,7 @@ contract CapsuleEscrow {
 
     function checkIn(uint32 capsuleId) public payable {
         // verify capsule exists and is not occupied
-        require(exists(capsuleId) && (isFresh(capsuleId) || isFree(capsuleId) && !isBad(capsuleId)));
+//        require(exists(capsuleId) && (isFresh(capsuleId) || isFree(capsuleId) && !isBad(capsuleId)));
 
         // how much ETH we need to lock
         uint256 price = capsules[capsuleId].fee + capsules[capsuleId].deposit;
@@ -143,7 +143,7 @@ contract CapsuleEscrow {
 
     function checkOut(uint32 capsuleId) public {
         // verify sender is checked in
-        require(checkIns[capsuleId].customer == msg.sender && !isFree(capsuleId) && !isBad(capsuleId));
+//        require(checkIns[capsuleId].customer == msg.sender && !isFree(capsuleId) && !isBad(capsuleId));
 
         // perform the checkout
         checkIns[capsuleId].checkedOut = uint32(now);
@@ -151,7 +151,7 @@ contract CapsuleEscrow {
 
     function reportAnIssue(uint32 capsuleId, string description) public {
         // verify capsule exists and is not occupied
-        require(exists(capsuleId) && !isFresh(capsuleId) && isFree(capsuleId) && !isBad(capsuleId));
+//        require(exists(capsuleId) && !isFresh(capsuleId) && isFree(capsuleId) && !isBad(capsuleId));
 
         // top up owner's balance
         ownerBalances[capsules[capsuleId].owner] += capsules[capsuleId].deposit;
