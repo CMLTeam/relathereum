@@ -38,8 +38,11 @@ class TrackState extends State<TrackScreen> {
 
   stopTracking() async {
     lock = true;
+    var c = await CapsuleEscrowService().init();
+    c.checkOut(int.parse(widget.capsuleId));
     Future.delayed(const Duration(milliseconds: 4000), () {
-      Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
+      Navigator.popUntil(
+          context, ModalRoute.withName(Navigator.defaultRouteName));
     });
   }
 
@@ -50,44 +53,54 @@ class TrackState extends State<TrackScreen> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: (unlocked && !lock) ?
-            [
-                    Text(timeStayedString, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+            children: (unlocked && !lock)
+                ? [
+                    Text(timeStayedString,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600)),
                     Text(""),
-                    Text("Price: ${priceFormat.format(currentFee)} ETH", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                  ] : (lock ?
-            [
-              Icon(
-                Icons.lock,
-                size: 60,
-                color: Colors.blue,
-              ),
-              Text("locking",
-                  style: TextStyle(fontSize: 30, color: Colors.blue)),
-            ] : [
-                    Icon(
-                      Icons.lock_open,
-                      size: 60,
-                      color: Colors.blue,
-                    ),
-                    Text("unlocking",
-                        style: TextStyle(fontSize: 30, color: Colors.blue)),
-                  ])));
+                    Text("Price: ${priceFormat.format(currentFee)} ETH",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600)),
+                  ]
+                : (lock
+                    ? [
+                        Icon(
+                          Icons.lock,
+                          size: 60,
+                          color: Colors.blue,
+                        ),
+                        Text("locking",
+                            style: TextStyle(fontSize: 30, color: Colors.blue)),
+                      ]
+                    : [
+                        Icon(
+                          Icons.lock_open,
+                          size: 60,
+                          color: Colors.blue,
+                        ),
+                        Text("unlocking",
+                            style: TextStyle(fontSize: 30, color: Colors.blue)),
+                      ])));
 
     return Scaffold(
-        body: addTitleToScreen(screen),
-        floatingActionButton: new Row(
+      body: addTitleToScreen(screen),
+      floatingActionButton: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: ((!lock && unlocked) ? <Widget>[
-            RoundedButton(icon: Icons.lock, title: "Lock", press: () => stopTracking()),
-            RoundedButton(icon: Icons.bug_report, title: "Report")
-          ] : [])
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          children: ((!lock && unlocked)
+              ? <Widget>[
+                  RoundedButton(
+                      icon: Icons.lock,
+                      title: "Lock",
+                      press: () => stopTracking()),
+                  RoundedButton(icon: Icons.bug_report, title: "Report")
+                ]
+              : [])),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 //      new Row(mainAxisAlignment: MainAxisAlignment.spaceAround ,children: <Widget>[
 //
 //      ]),
-        );
+    );
   }
 
   @override
@@ -112,8 +125,6 @@ class TrackState extends State<TrackScreen> {
   }
 
   String _formatDuration(Duration duration) {
-    return "Relaxing time ${f.format(duration.inHours)}:${f.format(
-        duration.inMinutes - duration.inHours * 60)}:${f.format(
-        duration.inSeconds - duration.inMinutes * 60)}";
+    return "Relaxing time ${f.format(duration.inHours)}:${f.format(duration.inMinutes - duration.inHours * 60)}:${f.format(duration.inSeconds - duration.inMinutes * 60)}";
   }
 }
