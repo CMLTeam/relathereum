@@ -45,6 +45,7 @@ class _UnlockState extends State<UnlockScreen> {
   }
 
   Container _buildInfoSection() => Container(
+      padding: EdgeInsets.fromLTRB(16, 22, 0, 0),
       alignment: Alignment.center,
       child: Text(
         "Earn 30 minutes of stay for free by unlocking it now!",
