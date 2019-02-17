@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_flat_app/components/Buttons/RoundedButton.dart';
+import 'package:flutter_flat_app/screens/App/MapScreen.dart';
 import 'package:flutter_flat_app/utils/common.dart';
 import 'package:intl/intl.dart';
 
 class TrackScreen extends StatefulWidget {
-
   final String capsuleId;
 
   const TrackScreen({Key key, this.capsuleId}) : super(key: key);
@@ -15,39 +16,70 @@ class TrackScreen extends StatefulWidget {
 
 class TrackState extends State<TrackScreen> {
   bool unlocked = false;
+  bool lock = false;
   int timeStayed = 0;
   Duration timeStayedSeconds = Duration(seconds: 0);
   double currentFee = 0;
   String timeStayedString;
   var f = new NumberFormat("00");
+  var priceFormat = new NumberFormat("##.#####");
 
   startTracking() {
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
-
-
+  
+  stopTracking() {
+    lock = true;
+    Future.delayed(const Duration(milliseconds: 4000), () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => App()));
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
-
     Widget screen = Container(
         alignment: Alignment.center,
-        child:
-        Column(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: unlocked ? [
-              Text(timeStayedString),
-              Text("Price: $currentFee ETH"),
-            ] :
+            children: unlocked
+                ? !lock ? [
+                    Text(timeStayedString, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                    Text(""),
+                    Text("Price: ${priceFormat.format(currentFee)} ETH", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                  ] : 
             [
-              Icon(Icons.lock_open, size: 60, color: Colors.blue,),
-              Text("unlocking", style: TextStyle(fontSize: 30, color: Colors.blue)),
+              Icon(
+                Icons.lock,
+                size: 60,
+                color: Colors.blue,
+              ),
+              Text("locking",
+                  style: TextStyle(fontSize: 30, color: Colors.blue)),
             ]
-        )
-    );
+                : [
+                    Icon(
+                      Icons.lock_open,
+                      size: 60,
+                      color: Colors.blue,
+                    ),
+                    Text("unlocking",
+                        style: TextStyle(fontSize: 30, color: Colors.blue)),
+                  ]));
 
     return Scaffold(
         body: addTitleToScreen(screen),
+        floatingActionButton: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            RoundedButton(icon: Icons.lock, title: "Lock", press: stopTracking()),
+            RoundedButton(icon: Icons.bug_report, title: "Report")
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+//      new Row(mainAxisAlignment: MainAxisAlignment.spaceAround ,children: <Widget>[
+//
+//      ]),
         );
   }
 
