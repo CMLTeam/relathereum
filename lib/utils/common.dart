@@ -10,8 +10,8 @@ buildTitle({marginTop: 70.0}) {
         "RELATHEREUM",
         style: TextStyle(
             fontSize: 36,
-            color: Colors.blueAccent,
-            fontWeight: FontWeight.bold),
+            color: Color.fromRGBO(0, 128, 255, 1),
+            fontWeight: FontWeight.w900, letterSpacing: 0.2),
       ));
 }
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:intl/intl.dart';
 
 import "../../utils/common.dart";
+import "../../components/Buttons/RoundedButton.dart";
 
 class UnlockScreen extends StatefulWidget {
   final String capsulaIdNumber;
@@ -13,10 +14,12 @@ class UnlockScreen extends StatefulWidget {
 }
 
 class _UnlockState extends State<UnlockScreen> {
-  String capsuleIdNumber = "initial";
+  String capsuleIdNumber = "";
   List<SmartContract> smartContracts = [];
   String capsuleStatus = '';
   bool dataLoaded = false;
+
+  final formatter = new DateFormat('dd.MM.yyyy hh:mm');
 
   @override
   initState() {
@@ -71,43 +74,100 @@ class _UnlockState extends State<UnlockScreen> {
         ),
       );
 
-  Widget buildContractsTable() => Padding(
+  Widget _buildContractsTable() =>
+      Padding(
       padding: EdgeInsets.fromLTRB(5, 29, 5, 0),
       child: Container(
-          decoration: BoxDecoration(color: Color.fromRGBO(216, 216, 216, 1), borderRadius: BorderRadius.circular(10)),
+          height: 400,
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(216, 216, 216, 1),
+              borderRadius: BorderRadius.circular(10)),
           child: Column(children: [
-            buildHeaderTable(),
-            Container(/*child: ListView()*/)
-          ])));
+            _buildTableRow(
+                isHeader: true, content: ["Grade", "TxHash", "Details", "Date"
+            ]),
+            Container(child: Expanded(
+                child: ListView.builder(scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemBuilder: (context, ind) => _rowTableBuilder(context, ind),
+                  itemCount: smartContracts.length,)))
+          ])
+      ));
 
-  Widget buildHeaderTable() {
-    var style = TextStyle(fontSize: 14, fontWeight: FontWeight.bold);
+  String trim(String string, int length) =>
+      string.length <= length ? string : string.substring(0, length) + "...";
+
+  Widget _rowTableBuilder(context, ind) {
+    SmartContract contract = smartContracts[ind];
+
+    if (contract.grade == "RENOVATED")
+      return _buildRenovatedState(contract);
+    return _buildTableRow(isHeader: false,
+        content: [
+          contract.grade,
+          trim(contract.txHash, 12),
+          trim(contract.details, 25),
+          formatter.format(contract.date)
+        ]);
+  }
+
+  Widget _buildRenovatedState(SmartContract contract) {
+    var content = "Capsule Was Renovated At ${formatter.format(
+        contract.date)} \n" +
+        "Resolution: ${contract.details}";
+
+    return Container(padding: EdgeInsets.fromLTRB(45, 10, 45, 10),
+        color: Color.fromRGBO(126, 211, 33, 1),
+        child: Text(content,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),));
+  }
+
+  unlockCapsule()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Text("$capsuleIdNumber")));
+
+  Widget _buildTableRow({isHeader = false, List<String> content}) {
+    if (content.length != 4) return Container();
+
+    var style = TextStyle(
+        fontSize: isHeader ? 14 : 11,
+        fontWeight: isHeader ? FontWeight.bold : null);
 
     return Container(
+        padding: EdgeInsets.only(bottom: 5, top: 5),
         child: Row(
-      children: <Widget>[
-        Container(
-            child: Text(
-          "Grade",
-          style: style,
-        )),
-        Container(
-            child: Text(
-          "TxHash",
-          style: style,
-        )),
-        Container(
-            child: Text(
-          "Details",
-          style: style,
-        )),
-        Container(
-            child: Text(
-          "Date",
-          style: style,
-        )),
-      ],
-    ));
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+                width: 45,
+                child: Text(
+                  content[0],
+                  style: style,
+                )),
+            Container(
+                padding: EdgeInsets.only(left: 9),
+                width: 95,
+                child: Text(
+                  content[1],
+                  style: style,
+                )),
+            Expanded(
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 5),
+                    child: Text(
+                      content[2],
+                      textAlign: TextAlign.center,
+                      style: style,
+                    ))),
+            Container(
+                width: 100,
+                padding: EdgeInsets.only(left: 5),
+                child: Text(
+                  content[3],
+                  style: style,
+                )),
+          ],
+        ));
   }
 
   @override
@@ -126,11 +186,14 @@ class _UnlockState extends State<UnlockScreen> {
             padding: EdgeInsets.only(top: 137),
             child: Column(
               children: <Widget>[
-                isGood ? _buildInfoSection() : buildHeaderTable(),
+                isGood ? _buildInfoSection() : Container(),
                 _buildStatusSection(),
-                buildContractsTable(),
+                _buildContractsTable(),
+                RoundedButton(
+                  isTransparent: false, press: unlockCapsule, title: "UNLOCK", icon: Icons.lock_open,)
               ],
-            ))));
+            )
+        )));
   }
 }
 
@@ -149,6 +212,11 @@ class SmartContract {
         txHash: json['txHash'].toString(),
         details: json['details'].toString(),
         date: date);
+  }
+
+  @override
+  String toString() {
+    return "Grade:  $grade, txHash: $txHash, details: $details, date: $date";
   }
 }
 

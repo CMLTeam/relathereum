@@ -16,10 +16,11 @@ class ScanQrButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(7), border: Border.all(color: Colors.blueAccent, width: 2)),
-        padding: EdgeInsets.symmetric(vertical: 3),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(7),
+            border: Border.all(color: Colors.blueAccent, width: 2),
+            color: isTransparent ? Colors.transparent : Colors.white),
         child: Material(
-            color: isTransparent ? Colors.transparent : Colors.white,
+            color: Colors.transparent,
             child: InkWell(
               child: Container(
                 alignment: Alignment.center,
@@ -27,13 +28,14 @@ class ScanQrButton extends StatelessWidget {
                   children: <Widget>[
                     Container(
                         padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
-                        child: Tab(icon: Icon(QrCode.qr_code, color: Colors.blueAccent,))),
+                        child: Tab(icon: Icon(QrCode.qr_code,
+                          color: Color.fromRGBO(0, 128, 255, 1),))),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: Text(
                         "SCAN TO RELAX",
                         style: TextStyle(
-                            color: Colors.blueAccent,
+                            color: Color.fromRGBO(0, 128, 255, 1),
                             fontSize: 23,
                             fontWeight: FontWeight.bold ),
                       ),
