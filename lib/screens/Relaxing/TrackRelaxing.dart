@@ -47,8 +47,8 @@ class TrackState extends State<TrackScreen> {
               Text("Price: $currentFee ETH"),
             ] :
             [
-              Icon(Icons.lock_open, size: 40, color: Colors.blue,),
-              Text("unlocking"),
+              Icon(Icons.lock_open, size: 60, color: Colors.blue,),
+              Text("unlocking", style: TextStyle(fontSize: 30, color: Colors.blue)),
             ]
         )
     );

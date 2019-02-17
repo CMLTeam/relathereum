@@ -1,9 +1,13 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import "package:flutter/material.dart";
-import "../../utils/common.dart";
-import "../QrCodeScanner/QrCodeScannerScreen.dart";
-import "../../components/Buttons/ScanQrButton.dart";
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+
+import "../../components/Buttons/ScanQrButton.dart";
+import "../../utils/AlertModal.dart";
+import "../../utils/common.dart";
+import '../Unlock/UnlockScreen.dart';
 
 ExactAssetImage qrCodeLogo = new ExactAssetImage("assets/qr-code.png");
 var location = new Location();
@@ -89,9 +93,50 @@ class AppState extends State<App> {
     ));
   }
 
-  launchQrCodeScanner() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => QrCodeScannerScreen()));
+  scan() async {
+    try {
+      // FIXME: delete after testing
+//      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UnlockScreen(capsulaIdNumber: "QR_code",)),);
+      // FIXME: uncomment after testing
+      String barcode = await BarcodeScanner.scan();
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => UnlockScreen(capsulaIdNumber: barcode,)));
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        showDialog(
+            context: context,
+            builder: (context) =>
+                AlertModal(
+                  header: "PERMISSIN DENIED",
+                  message:
+                  "Your app cannot have permission to access to camera",
+                  type: AlertType.error,
+                  pressButton: () => null,
+                ));
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) =>
+                AlertModal(
+                  header: "UNKNOWN ERROR",
+                  message: "There is some unknown error",
+                  type: AlertType.error,
+                  pressButton: () => null,
+                ));
+      }
+    } on FormatException {
+      print("User didn't scan any QRcode and press back");
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) =>
+              AlertModal(
+                header: "UNKNOWN ERROR",
+                message: "There is some unknown error",
+                type: AlertType.error,
+                pressButton: () => null,
+              ));
+    }
   }
 
   @override
@@ -104,7 +149,7 @@ class AppState extends State<App> {
             child: addTitleToScreen(_buildMaps(screenSize))),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: ScanQrButton(
-          scanQr: launchQrCodeScanner,
+          scanQr: scan,
         ));
   }
 }
