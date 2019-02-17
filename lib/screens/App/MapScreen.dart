@@ -17,39 +17,41 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   GoogleMapController mapController;
-  Future mapReady = new Future.delayed(const Duration(milliseconds: 1000));
+  Future await500 = new Future.delayed(const Duration(milliseconds: 1000));
 
   initState() {
     super.initState();
   }
 
-  void locateToCurrentCoors() async {
+  Future<List<double>> locateToCurrentCoors() async {
+    await await500;
     Map<String, double> coors = await location.getLocation();
     _goToLocation(coors['latitude'], coors['longitude']);
+    return [coors['latitude'], coors['longitude']];
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    locateToCurrentCoors();
+  void _onMapCreated(GoogleMapController controller) async {
+    var coors = await locateToCurrentCoors();
     //TODO change hardcode to locations in Штутгарт
     controller.addMarker(MarkerOptions(
-      position: LatLng(51.5160895, -0.1294527),
-      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(coors[0] + 0.0002, coors[1] - 0.0003),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
     ));
     controller.addMarker(MarkerOptions(
-      position: LatLng(51.4815896, -0.1177538),
-      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(coors[0] + 0.0022, coors[1] + 0.0125),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
     ));
     controller.addMarker(MarkerOptions(
-      position: LatLng(51.4815896, -0.1477538),
-      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(coors[0] - 0.0022, coors[1] - 0.0105),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
     ));
     controller.addMarker(MarkerOptions(
-      position: LatLng(51.5315896, -0.1577538),
-      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(coors[0] - 0.0022, coors[1] + 0.0045),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
     ));
     controller.addMarker(MarkerOptions(
-      position: LatLng(51.534896, -0.1077538),
-      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(coors[0] + 0.0052, coors[1] + 0.0055),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
     ));
     setState(() {
       mapController = controller;
@@ -59,20 +61,20 @@ class AppState extends State<App> {
   // Maybe we can used it for moving to user's position
   _goToLocation(double latitude, double longitude) async {
     print(">>> go to loc: $latitude | $longitude");
-    await mapReady;
+    await await500;
     return mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(
             bearing: 270.0,
             target: LatLng(latitude, longitude),
             tilt: 30.0,
-            zoom: 17.0)));
+            zoom: 15.0)));
   }
 
   _buildMaps(Size screenSize) {
     return Container(
         child: SizedBox(
       width: screenSize.width,
-      height: screenSize.height,
+      height: screenSize.height-10,
       child: GoogleMap(
         mapType: MapType.terrain,
         onMapCreated: _onMapCreated,

@@ -4,7 +4,10 @@ import 'package:flutter_flat_app/utils/common.dart';
 import 'package:intl/intl.dart';
 
 class TrackScreen extends StatefulWidget {
-  const TrackScreen({Key key}) : super(key: key);
+
+  final String capsuleId;
+
+  const TrackScreen({Key key, this.capsuleId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => TrackState();
