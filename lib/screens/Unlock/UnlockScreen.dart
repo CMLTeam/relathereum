@@ -189,20 +189,20 @@ class _UnlockState extends State<UnlockScreen> {
     return Scaffold(
         body: addTitleToScreen(Container(
             padding: EdgeInsets.only(top: 10),
-            child: Column(
+            child: (Column(
               children: <Widget>[
                 isGood ? _buildInfoSection() : Container(),
                 _buildStatusSection(),
                 _buildStatusesTable(),
-
               ],
-            )
+            ))
         )),
       floatingActionButton: Container(alignment: Alignment.bottomCenter,child: RoundedButton(
         isTransparent: false,
         press: unlockCapsule,
         title: "UNLOCK",
         icon: Icons.lock_open,)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
