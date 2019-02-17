@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_flat_app/screens/App/MapScreen.dart';
 import 'package:flutter_flat_app/screens/Login/ConfirmCodeScreen.dart';
 import 'package:flutter_flat_app/screens/Profile/index.dart';
 import 'package:flutter_flat_app/theme/style.dart';
@@ -61,7 +62,7 @@ class LoginScreenState extends State<LoginScreen> {
     if (verifyUser(_phone)) {
       print("Login Successfull. phone: $_phone");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => ConfirmCodeScreen()));
+          .push(MaterialPageRoute(builder: (context) => MapScreen()));
     } else {
       showInSnackBar("Login or Password is wrong");
     }

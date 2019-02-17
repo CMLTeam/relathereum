@@ -36,10 +36,10 @@ class TrackState extends State<TrackScreen> {
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
 
-  stopTracking() {
+  stopTracking() async {
     lock = true;
     Future.delayed(const Duration(milliseconds: 4000), () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => App()));
+      Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
     });
   }
 
@@ -50,12 +50,12 @@ class TrackState extends State<TrackScreen> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: unlocked
-                ? !lock ? [
+            children: (unlocked && !lock) ?
+            [
                     Text(timeStayedString, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
                     Text(""),
                     Text("Price: ${priceFormat.format(currentFee)} ETH", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                  ] :
+                  ] : (lock ?
             [
               Icon(
                 Icons.lock,
@@ -64,8 +64,7 @@ class TrackState extends State<TrackScreen> {
               ),
               Text("locking",
                   style: TextStyle(fontSize: 30, color: Colors.blue)),
-            ]
-                : [
+            ] : [
                     Icon(
                       Icons.lock_open,
                       size: 60,
@@ -73,16 +72,16 @@ class TrackState extends State<TrackScreen> {
                     ),
                     Text("unlocking",
                         style: TextStyle(fontSize: 30, color: Colors.blue)),
-                  ]));
+                  ])));
 
     return Scaffold(
         body: addTitleToScreen(screen),
         floatingActionButton: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            RoundedButton(icon: Icons.lock, title: "Lock", press: stopTracking()),
+          children: ((!lock && unlocked) ? <Widget>[
+            RoundedButton(icon: Icons.lock, title: "Lock", press: () => stopTracking()),
             RoundedButton(icon: Icons.bug_report, title: "Report")
-          ],
+          ] : [])
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 //      new Row(mainAxisAlignment: MainAxisAlignment.spaceAround ,children: <Widget>[

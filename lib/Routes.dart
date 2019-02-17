@@ -10,6 +10,7 @@ class Routes {
   var routes = <String, WidgetBuilder>{
     "/Login": (BuildContext context) => new LoginScreen(),
     "/ContractTest" : (BuildContext context) => new ExampleScreen(),
+    "/Map": (BuildContext context) => new MapScreen(),
   };
 
   Routes() {

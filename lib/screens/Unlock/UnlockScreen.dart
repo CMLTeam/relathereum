@@ -190,7 +190,7 @@ class _UnlockState extends State<UnlockScreen> {
     return Scaffold(
       body: addTitleToScreen(Flexible(
           child: Container(
-              padding: EdgeInsets.only(top: 137),
+              padding: EdgeInsets.only(top: 100),
               child: (ListView(
             scrollDirection: Axis.vertical,
 
