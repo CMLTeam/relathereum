@@ -17,16 +17,10 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   GoogleMapController mapController;
-  Future mapReady;
+  Future mapReady = new Future.delayed(const Duration(milliseconds: 1000));
 
   initState() {
     super.initState();
-    locateToCurrentCoors();
-//    location.onLocationChanged().listen((Map<String, double> currentLocation) {
-//      print(
-//          "listener: (${currentLocation["latitude"]} | ${currentLocation["longitude"]}");
-//      _goToLocation(currentLocation['latitude'], currentLocation['longitude']);
-//    });
   }
 
   void locateToCurrentCoors() async {
@@ -35,7 +29,7 @@ class AppState extends State<App> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
-
+    locateToCurrentCoors();
     //TODO change hardcode to locations in Штутгарт
     controller.addMarker(MarkerOptions(
       position: LatLng(51.5160895, -0.1294527),
@@ -65,8 +59,6 @@ class AppState extends State<App> {
   // Maybe we can used it for moving to user's position
   _goToLocation(double latitude, double longitude) async {
     print(">>> go to loc: $latitude | $longitude");
-    latitude = latitude == null ? latitude : 43.53434;
-    longitude = longitude == null ? longitude : 46.5334;
     await mapReady;
     return mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -82,6 +74,7 @@ class AppState extends State<App> {
       width: screenSize.width,
       height: screenSize.height,
       child: GoogleMap(
+        mapType: MapType.terrain,
         onMapCreated: _onMapCreated,
         myLocationEnabled: true,
         initialCameraPosition: CameraPosition(
@@ -101,9 +94,7 @@ class AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery
-        .of(context)
-        .size;
+    final Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
         body: Container(
