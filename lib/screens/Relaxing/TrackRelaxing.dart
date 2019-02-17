@@ -39,8 +39,8 @@ class TrackState extends State<TrackScreen> {
 
   stopTracking() async {
     lock = true;
-    if (timer != null) timer.cancel();
     Future.delayed(const Duration(milliseconds: 4000), () {
+      if (timer != null) timer.cancel();
       Navigator.popUntil(
           context, ModalRoute.withName(Navigator.defaultRouteName));
     });
