@@ -35,6 +35,8 @@ class AppState extends State<App> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
+
+    //TODO change hardcode to locations in Штутгарт
     controller.addMarker(MarkerOptions(
       position: LatLng(51.5160895, -0.1294527),
       icon: BitmapDescriptor.defaultMarker,
