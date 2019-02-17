@@ -1,5 +1,24 @@
 [
   {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "isFresh",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
     "inputs": [
       {
@@ -138,6 +157,20 @@
         "type": "uint32"
       }
     ],
+    "name": "fix",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
     "name": "checkOut",
     "outputs": [],
     "payable": false,
@@ -198,45 +231,26 @@
         "type": "uint32"
       }
     ],
-    "name": "fresh",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "capsuleId",
-        "type": "uint32"
-      }
-    ],
-    "name": "bad",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "capsuleId",
-        "type": "uint32"
-      }
-    ],
     "name": "isFree",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "capsuleId",
+        "type": "uint32"
+      }
+    ],
+    "name": "isBad",
     "outputs": [
       {
         "name": "",

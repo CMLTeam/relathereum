@@ -3,7 +3,7 @@
 OUT=/tmp/out.txt
 > $OUT
 
-truffle migrate --all --reset 2>&1 | tee $OUT
+truffle migrate --network $1 --all --reset 2>&1 | tee $OUT
 addr_capsule=$(cat $OUT | grep capsule_escrow_address | awk '{ print $2 }')
 addr_test=$(cat $OUT | grep test_address | awk '{ print $2 }')
 

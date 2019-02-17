@@ -20,6 +20,6 @@
     "test": "./test.sh",
     "compile": "truffle compile",
     "migrate": "truffle migrate --all --reset",
-    "deploy": "./deploy.sh"
+    "deploy": "./deploy.sh prod"
   }
 }

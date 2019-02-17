@@ -9,7 +9,9 @@ dependencies:
   path_provider:  0.5.0+1
   camera: 0.4.0+1
   web3dart: ^0.4.5
-  intl: ^0.15.7
+  intl: 0.15.7
+  google_maps_flutter: 0.2.0
+  location: ^1.4.1
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +44,7 @@ flutter:
     - assets/login-background.jpg
     - assets/abi/GemERC721.json
     - assets/abi/contracts_Test_sol_Test.abi
+    - assets/abi/contracts_CapsuleEscrow_sol_CapsuleEscrow.abi
     - assets/login-image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
