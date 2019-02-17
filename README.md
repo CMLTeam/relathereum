@@ -1,4 +1,4 @@
-# relathereum
+# Relathereum
 Hackathon Stuttgart 2019
 
 **Problem:**
