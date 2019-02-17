@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import "../../utils/common.dart";
 import "../../components/Buttons/RoundedButton.dart";
+import '../Relaxing/TrackRelaxing.dart';
 
 class UnlockScreen extends StatefulWidget {
   final String capsulaIdNumber;
@@ -123,7 +124,7 @@ class _UnlockState extends State<UnlockScreen> {
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),));
   }
 
-  unlockCapsule()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Text("$capsuleIdNumber")));
+  unlockCapsule()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>TrackScreen(capsuleId: capsuleIdNumber,)));
 
   Widget _buildTableRow({isHeader = false, List<String> content}) {
     if (content.length != 4) return Container();
